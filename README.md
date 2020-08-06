@@ -2,6 +2,13 @@
 
 This page presents the different codes and functions developed to perform the bioanalyses described in the article **Computer vision for pattern detection in chromosome contact maps** by Cyril Matthey-Doret et al. The codes presented here should allow to reproduce the different plots and analyses from the main text and the supplementary data. 
 
+Preprint can be found on https://www.biorxiv.org/content/10.1101/2020.03.08.981910v3.full
+
+Docs available at https://chromosight.readthedocs.io
+
+This github page is a companion page of the chromosight algorithme page:
+https://github.com/koszullab/chromosight
+
 ### Table of contents
 
 * [Dependencies](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#dependencies)
