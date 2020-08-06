@@ -7,15 +7,7 @@ This page presents the different codes and functions developed to perform the bi
 * [Dependencies](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#dependencies)
 * [Raw data extraction and alignment](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#raw-data-extraction-and-alignment)
 * [Building contacts map](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#building-contacts-map)
-* [Correlation with other data](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#correlation-with-other-data)
-* [Scalogram visualization tool](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#scalogram-vizulaisation-tool)
-* [Directionality Index](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#directionality-index)
-* [Correlation between transcription and contacts](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#correlation-between-transcription-and-contacts)
-* [3D structure](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#3d-structure)
-* [Ratio of contacts](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#ratio-of-contacts)
 
-
-### Dependencies
 
 Scripts and codes can be run on OS X and other Unix-based systems, and necessitate:
 #### *Python (>=3.)*
