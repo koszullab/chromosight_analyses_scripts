@@ -37,7 +37,7 @@ FASTQ files of the reads were deposited in the NCBI database under the GEO acces
 fasterq-dump --split-3 SRR1514669 -O .
 ```
 
-#### Alignment
+#### Alignment 
 
 The aligment and construction of matrices have been performed as perviously described. 
 
