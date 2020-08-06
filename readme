@@ -1,6 +1,7 @@
 ## Codes of the analysis presented in Chromosight article ##
 
-This page presents the different codes and functions developed to perform the analysis described in the article **Computer vision for pattern detection in chromosomecontact maps**. 
+This page presents the different codes and functions developed to perform the analysis described in the article 
+*Computer vision for pattern detection in chromosomecontact maps*. 
 The codes presented here should allow to reproduce the different graphs and figures from the main text and the supplementary data. 
 
 ### Table of contents
