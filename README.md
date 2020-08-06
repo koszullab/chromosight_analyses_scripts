@@ -6,7 +6,7 @@ Preprint can be found on https://www.biorxiv.org/content/10.1101/2020.03.08.9819
 
 Docs available at https://chromosight.readthedocs.io
 
-This github page is a companion page of the chromosight algorithme page:
+This github page is a companion page of the Chromosight algorithme page:
 https://github.com/koszullab/chromosight
 
 ### Table of contents
@@ -17,7 +17,7 @@ https://github.com/koszullab/chromosight
 
 
 Scripts and codes can be run on OS X and other Unix-based systems, and necessitate:
-#### *Python (>=3.)*
+#### *Python (>=3)*
 * Numpy
 * Matplotlib (>=1.0)
 * Scipy
