@@ -2,11 +2,11 @@
 
 This page presents the different codes and functions developed to perform the bioanalyses described in the article **Computer vision for pattern detection in chromosome contact maps** by Cyril Matthey-Doret et al. The codes presented here should allow to reproduce the different plots and analyses from the main text and the supplementary data. 
 
-Preprint can be found on https://www.biorxiv.org/content/10.1101/2020.03.08.981910v3.full
+Preprint of the associated article can be found on https://www.biorxiv.org/content/10.1101/2020.03.08.981910v3.full
 
 Docs of the algorithm available at https://chromosight.readthedocs.io
 
-This github page is a companion page of the Chromosight algorithme page:
+This github page is a companion page of the Chromosight algorithm page:
 https://github.com/koszullab/chromosight
 
 ### Table of contents
@@ -14,7 +14,6 @@ https://github.com/koszullab/chromosight
 * [Dependencies](https://github.com/koszullab/chromosight_codes_for_bioanalysis/blob/master/README.md#dependencies)
 * [Raw data extraction and alignment](https://github.com/koszullab/chromosight_codes_for_bioanalysis/blob/master/README.md#raw-data-extraction-and-alignment)
 *
-
 
 Scripts and codes can be run on OS X and other Unix-based systems, and necessitate:
 #### *Python (>=3)*
@@ -42,10 +41,8 @@ fasterq-dump --split-3 SRR1514669 -O .
 The aligment and construction of matrices have been performed as perviously described. 
 
 
-
 ## Detection analysis
-
-This document presents the command lines used for the detection analyses presented in the main text. 
+ 
 Contact data as cool files can be dowloaded on zenodo [doi:  10.5281/zenodo.3742095](doi:  10.5281/zenodo.3742095)
 
 version of Chromosight 1.1.2
