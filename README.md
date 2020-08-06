@@ -1,51 +1,53 @@
-## Codes and functions for bioanalysis of Chromosight article ##
+## Main results from the chromosight paper
 
-This page presents the different codes and functions developed to perform the analyses described in the article **Computer vision for pattern detection in chromosome contact maps** by Cyril Matthey-Doret et al. The codes presented here should allow to reproduce the different plots and analyses from the main text and the supplementary data. 
+This repo contains instructions to reproduce the different figures and results from our paper, **[Computer vision for pattern detection in chromosome contact maps](https://www.biorxiv.org/content/10.1101/2020.03.08.981910v3.full)** by Cyril Matthey-Doret et al., which showcases its signature program, [chromosight](https://github.com/koszullab/chromosight). See also the [official documentation of the program](https://chromosight.readthedocs.io), complete with demos and tutorials for your own use cases.
 
-Preprint of the associated article can be found on https://www.biorxiv.org/content/10.1101/2020.03.08.981910v3.full
-
-Docs of the algorithm available at https://chromosight.readthedocs.io
-
-This github page is a companion page of the Chromosight algorithm page:
-https://github.com/koszullab/chromosight
 
 ### Table of contents
 
-* [Dependencies](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/README.md#dependencies)
-* [Raw data extraction and alignment](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/README.md#raw-data-extraction-and-alignment)
-*
+* Requirements
+* [Raw data extraction and alignment](https://github.com/koszullab/chromosight_codes_for_bioanalysis/blob/master/README.md#raw-data-extraction-and-alignment)
 
-Scripts and codes can be run on OS X and other Unix-based systems, and necessitate:
-#### *Python (>=3)*
-* Numpy
-* Matplotlib (>=1.0)
-* Scipy
-* Biopython
-* pandas
+#### Requirements
 
-#### External programs
+##### Environment
 
-* `Bowtie2 ` / [bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
-* `SRA Tool kit ` / [sra_sdk/2.9.6](https://www.ncbi.nlm.nih.gov/books/NBK158900/)
+Chromosight is designed to run on UNIX-like environments (e.g. Linux, OS X, Windows Subsystems for Linux, etc.) and has been tested on Ubuntu >= 14.10. It is entirely written in Python 3.6 with no planned support for earlier versions, including Python 2. The version used in the preprint is 1.1.2 and is installable from PyPI:
 
+```sh
+python3 -m pip install --user chromosight==1.1.2
+```
+
+##### Python packages
+
+If for some reason you need to install chromosight manually, then the following packages are required (from requirements.txt):
+
+* cooler
+* docopt
+* jsonschema
+* matplotlib
+* numpy
+* scikit-learn
+* scipy>= 1.3
+
+##### External programs
+
+In order to pull Hi-C data from the SRA and perform the alignment to generate the contact maps, you will need the following programs (directly available on the  Ubuntu repositories):
+
+* [`bowtie2`](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
+* [`sra-toolkit`](https://www.ncbi.nlm.nih.gov/books/NBK158900/) (`sratoolkit` on homebrew)
 
 #### Data extraction
 
-FASTQ files of the reads were deposited in the NCBI database under the GEO accession number GSE107301. A SRA executable called fastq-dump from SRA can be used to extract and split both reads of pair-end sequences: 
+FASTQ reads are available under the GEO accession number GSE107301. They can be pulled and split pairwise with the following command: 
+
 ```bash
 fasterq-dump --split-3 SRR1514669 -O .
 ```
 
-#### Alignment 
-
-The aligment and construction of matrices have been performed as perviously described. 
-
-
 ## Detection analysis
  
 Contact data as cool files can be dowloaded on zenodo [doi:10.5281/zenodo.3742095](https://zenodo.org/record/3742095)
-
-version of Chromosight 1.1.2
 
 ## Fig2.a and b
 ### *Saccharomyces cerevisiae*
