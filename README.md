@@ -43,7 +43,7 @@ The aligment and construction of matrices have been performed as perviously desc
 
 ## Detection analysis
  
-Contact data as cool files can be dowloaded on zenodo [doi:10.5281/zenodo.3742095](doi:10.5281/zenodo.3742095)
+Contact data as cool files can be dowloaded on zenodo [doi:10.5281/zenodo.3742095](https://zenodo.org/record/3742095)
 
 version of Chromosight 1.1.2
 
