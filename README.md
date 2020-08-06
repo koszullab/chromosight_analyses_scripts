@@ -1,6 +1,6 @@
 ## Codes and functions for bioanalysis of Chromosight article ##
 
-This page presents the different codes and functions developed to perform the bioanalyses described in the article **Computer vision for pattern detection in chromosome contact maps** by Cyril Matthey-Doret et al. The codes presented here should allow to reproduce the different plots and analyses from the main text and the supplementary data. 
+This page presents the different codes and functions developed to perform the analyses described in the article **Computer vision for pattern detection in chromosome contact maps** by Cyril Matthey-Doret et al. The codes presented here should allow to reproduce the different plots and analyses from the main text and the supplementary data. 
 
 Preprint of the associated article can be found on https://www.biorxiv.org/content/10.1101/2020.03.08.981910v3.full
 
