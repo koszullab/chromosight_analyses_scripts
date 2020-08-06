@@ -43,7 +43,7 @@ The aligment and construction of matrices have been performed as perviously desc
 
 ## Detection analysis
  
-Contact data as cool files can be dowloaded on zenodo [doi:  10.5281/zenodo.3742095](doi:  10.5281/zenodo.3742095)
+Contact data as cool files can be dowloaded on zenodo [doi:10.5281/zenodo.3742095](doi:10.5281/zenodo.3742095)
 
 version of Chromosight 1.1.2
 
@@ -82,11 +82,4 @@ version of Chromosight 1.1.2
 ### *Epstein Barr Virus (EBV)*
 
 ```chromosight detect --pattern=loops --min-dist=7000 --perc-undetected=30  --perc-zero=30 contacts2_SRR2312566_RAW_Epstein_500_500_df.cool  out_SRR2312566_epstein```
-
-
-
-
-
-
-
 
