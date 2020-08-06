@@ -11,8 +11,8 @@ https://github.com/koszullab/chromosight
 
 ### Table of contents
 
-* [Dependencies](https://github.com/koszullab/chromosight_codes_for_bioanalysis/blob/master/README.md#dependencies)
-* [Raw data extraction and alignment](https://github.com/koszullab/chromosight_codes_for_bioanalysis/blob/master/README.md#raw-data-extraction-and-alignment)
+* [Dependencies](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/README.md#dependencies)
+* [Raw data extraction and alignment](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/README.md#raw-data-extraction-and-alignment)
 *
 
 Scripts and codes can be run on OS X and other Unix-based systems, and necessitate:
