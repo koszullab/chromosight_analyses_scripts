@@ -4,16 +4,16 @@ This page presents the different codes and functions developed to perform the bi
 
 Preprint can be found on https://www.biorxiv.org/content/10.1101/2020.03.08.981910v3.full
 
-Docs available at https://chromosight.readthedocs.io
+Docs of the algorithm available at https://chromosight.readthedocs.io
 
 This github page is a companion page of the Chromosight algorithme page:
 https://github.com/koszullab/chromosight
 
 ### Table of contents
 
-* [Dependencies](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#dependencies)
-* [Raw data extraction and alignment](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#raw-data-extraction-and-alignment)
-* [Building contacts map](https://github.com/koszullab/E.coli.analysis/blob/master/README.md#building-contacts-map)
+* [Dependencies](https://github.com/koszullab/chromosight_codes_for_bioanalysis/blob/master/README.md#dependencies)
+* [Raw data extraction and alignment](https://github.com/koszullab/chromosight_codes_for_bioanalysis/blob/master/README.md#raw-data-extraction-and-alignment)
+*
 
 
 Scripts and codes can be run on OS X and other Unix-based systems, and necessitate:
@@ -22,6 +22,7 @@ Scripts and codes can be run on OS X and other Unix-based systems, and necessita
 * Matplotlib (>=1.0)
 * Scipy
 * Biopython
+* pandas
 
 #### External programs
 
