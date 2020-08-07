@@ -49,7 +49,10 @@ fasterq-dump --split-3 SRR1514669 -O .
 
 ## Detection analysis
  
-Contact data as cool files can be dowloaded on zenodo [doi:10.5281/zenodo.3742095](https://zenodo.org/record/3742095)
+Contact data (cool files) and BED files used in the manuscript can be dowloaded on zenodo [doi:10.5281/zenodo.3742095](https://zenodo.org/record/3742095)
+## Fig. 1
+
+Benchmark input and output data, as well as the code used, are archived and documented in the [Zenodo entry](https://zenodo.org/record/3742095).
 
 ## Fig. 2
 ### *Saccharomyces cerevisiae*
