@@ -60,31 +60,31 @@ for T in times_points:
     print(T)
     i+=1
     if T=="0h":
-        txt_file = "/media/axel/RSG4/human_cycle/R2/cool_files_8000/GSM3909703_TB-HiC-Dpn-R2-T0_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
+        txt_file = "GSM3909703_TB-HiC-Dpn-R2-T0_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
         
     if T=="2h":
-        txt_file = "/media/axel/RSG4/human_cycle/R2/cool_files_8000/GSM3909698_TB-HiC-Dpn-R2-T2_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
+        txt_file = "GSM3909698_TB-HiC-Dpn-R2-T2_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
     
     if T=="2h15":
-        txt_file = "/media/axel/RSG4/human_cycle/R2/cool_files_8000/GSM3909697_TB-HiC-Dpn-R2-T225_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
+        txt_file = "GSM3909697_TB-HiC-Dpn-R2-T225_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
     
     if T=="2h30":
-        txt_file = "/media/axel/RSG4/human_cycle/R2/cool_files_8000/GSM3909696_TB-HiC-Dpn-R2-T25_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
+        txt_file = "GSM3909696_TB-HiC-Dpn-R2-T25_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
     
     if T=="3h":
-        txt_file = "/media/axel/RSG4/human_cycle/R2/cool_files_8000/GSM3909694_TB-HiC-Dpn-R2-T3_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
+        txt_file = "GSM3909694_TB-HiC-Dpn-R2-T3_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
     
     if T=="4h":
-        txt_file = "/media/axel/RSG4/human_cycle/R2/cool_files_8000/GSM3909691_TB-HiC-Dpn-R2-T4_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
+        txt_file = "GSM3909691_TB-HiC-Dpn-R2-T4_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
     
     if T=="8h":
-        txt_file = "/media/axel/RSG4/human_cycle/R2/cool_files_8000/GSM3909686_TB-HiC-Dpn-R2-T8_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
+        txt_file = "GSM3909686_TB-HiC-Dpn-R2-T8_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
     
     if T=="10h":
-        txt_file = "/media/axel/RSG4/human_cycle/R2/cool_files_8000/GSM3909684_TB-HiC-Dpn-R2-T10_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
+        txt_file = "GSM3909684_TB-HiC-Dpn-R2-T10_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
     
     if T=="12h":
-        txt_file = "/media/axel/RSG4/human_cycle/R2/cool_files_8000/GSM3909682_TB-HiC-Dpn-R2-T12_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
+        txt_file = "GSM3909682_TB-HiC-Dpn-R2-T12_hg19.1000.multires.cool.res8000.cool.res.1Mb/loops_quant.txt"
     
     print(i,2.0/i)
     color1=lighten_color('royalblue', i*0.2)
