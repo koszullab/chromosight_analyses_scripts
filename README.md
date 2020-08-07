@@ -151,4 +151,18 @@ We then quantified the loop signals for different pairs of cohesin peaks using q
 We then use the python code [spectrum_cycle2_imple.py](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/python_codes/spectrum_cycle2_imple.py) to compute the lowess signal from the scatter plot of the loop scores versus distances between 
 peaks of cohesin and create the corresponding plot. 
 
+### Comparison of STAT1 calls across loop callers
+
+Loops are detected on GSE63525_GM12878_insitu_primary.mcool, from Rao et al. 2014. HiCCUPS calls were retrieved from the [GEO entry](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525).
+
+For other loop callers, loops were detected with default parameters at 10kb resolution:
+
+```bash
+hicDetectLoops --matrix GSE63525_GM12878_insitu_primary.mcool::/resolutions/10000 --outFileName hicexplorer/hicexplorer_loops
+cooltools compute-expected -p 4 -o cooltools/cooltools_expected.tsv GSE63525_GM12878_insitu_primary.mcool::/resolutions/10000
+cooltools call-dots GSE63525_GM12878_insitu_primary.mcool::/resolutions/10000 cooltools/cooltools_expected.tsv -o cooltools/cooltools_loops.tsv
+chromosight detect --pattern loops_small GSE63525_GM12878_insitu_primary.mcool::/resolutions/10000 chromosight/chromosight_loops_small_GSE63525
+```
+The output calls when then visualized using `python stat1_compare_calls.py`. The script is available in the `python_codes` directory.
+
 
