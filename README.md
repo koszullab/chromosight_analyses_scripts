@@ -133,12 +133,12 @@ To generate possible pairs from bed files you can use:
 ```bash
 MINDIST=10000
 MAXDIST=1000000
-bedtools window -a rad21_hg38.bed \
-                -b rad21_hg38.bed \
+bedtools window -a rad21_hg38_top4000.bed \
+                -b rad21_hg38_top4000.bed \
                 -w $MAXDIST \
     | awk -vmd=$MINDIST '$1 == $4 && ($5 - $2) >= md {print}' \
     | sort -k1,1 -k2,2n -k4,4 -k5,5n \
-    > input/scer_cohesin_peaks.bed2d
+    > rad21_hg38_top4000_comb_10kb_1mb.bed2d
 ```
 
 From cool files, we work with 10 kb resolution:
