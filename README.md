@@ -3,11 +3,6 @@
 This repo contains instructions to reproduce the different figures and results from our paper, **[Computer vision for pattern detection in chromosome contact maps](https://www.biorxiv.org/content/10.1101/2020.03.08.981910v3.full)** by Cyril Matthey-Doret et al., which showcases its signature program, [chromosight](https://github.com/koszullab/chromosight). See also the [official documentation of the program](https://chromosight.readthedocs.io), complete with demos and tutorials for your own use cases.
 
 
-### Table of contents
-
-* Requirements
-* [Raw data extraction and alignment](https://github.com/koszullab/chromosight_codes_for_bioanalysis/blob/master/README.md#raw-data-extraction-and-alignment)
-
 #### Requirements
 
 ##### Environment
@@ -40,7 +35,7 @@ In order to pull Hi-C data from the SRA and perform the alignment to generate th
 
 #### Data extraction
 
-FASTQ reads are available under the GEO accession number GSE107301. They can be pulled and split pairwise with the following command: 
+FASTQ reads are available on SRA servers. They can be pulled and split pairwise with the following command: 
 
 ```bash
 fasterq-dump --split-3 SRR1514669 -O .
@@ -124,6 +119,8 @@ python plot_sc_ca_maps.py "$sc_map" \
 ```
 
 The script `plot_sc_ca_maps.py` is in the `python_codes` directory.
+
+## Supplementary figures
 
 #### Computation and visualisation of Loop spectrum
 
