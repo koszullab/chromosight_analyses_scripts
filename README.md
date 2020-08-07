@@ -51,7 +51,7 @@ fasterq-dump --split-3 SRR1514669 -O .
  
 Contact data as cool files can be dowloaded on zenodo [doi:10.5281/zenodo.3742095](https://zenodo.org/record/3742095)
 
-## Fig2.
+## Fig. 2
 ### *Saccharomyces cerevisiae*
 
 ```chromosight detect --pattern=loops_small --min-dist 5000 --max-dist 200000  --perc-undetected=30 SRR7706227_SRR7706226_hic_scer_mitotic_2kb.cool SRR7706227_SRR7706226_scer_mitotic_p0.5```
