@@ -1,3 +1,9 @@
+"""
+This script loads loop calls from hicexplorer, hiccups, cooltools and chromosight
+as well as a cool file and generate a plot of the STAT1 region with the calls from each software
+cmdoret, 20200807
+"""
+
 import sys
 import chromosight.utils.contacts_map as cuc
 import pandas as pd
