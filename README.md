@@ -156,7 +156,9 @@ peaks of cohesin and create the corresponding plot.
 
 ### Comparison of STAT1 calls across loop callers
 
-Loops are detected on GSE63525_GM12878_insitu_primary.mcool, from Rao et al. 2014. HiCCUPS calls were retrieved from the [GEO entry](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525).
+Loops are detected on GSE63525_GM12878_insitu_primary, from Rao et al. 2014. The contact data and HiCCUPS calls were retrieved from the [GEO entry](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525).
+
+> The contact data is only availabl in hic format, which can be converted to mcool using [hic2cool](https://github.com/4dn-dcic/hic2cool)
 
 For other loop callers, loops were detected with default parameters at 10kb resolution:
 
