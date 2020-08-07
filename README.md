@@ -87,8 +87,40 @@ Contact data as cool files can be dowloaded on zenodo [doi:10.5281/zenodo.374209
 
 ### *Candida Albicans*
 
-TO DO 
+```bash
 
+sc_map="SRR7706226_hic_scer_mitotic.mcool::/resolutions/10000"
+ca_map="SRR3381672_hic_calb_10kb.cool"
+
+# Interactively pick 5-10 centros from S. cerevisiae
+# Note the grep and sed commands capture the standard output (coords of clicks)
+#and send them to a file
+chromosight generate-config --n-mads 15 \
+                            --click "$sc_map" \
+                            --win-size 41 \
+                            -e centromeres sc_centro \
+  | grep "^x = " \
+  | sed 's/[xy] \?= //g' \
+  | sed 's/, /\t/' \
+  > input_coords.tsv
+
+# De novo centromere detection on C. albicans using kernel built from S. cerevisiae
+chromosight detect -p0.7 \
+                  --n-mads 15 \
+                  -t12 \
+                  --kernel-config sc_centro.json \
+                  --inter "$ca_map" \
+                  sc_to_ca_centro
+
+# Plot both Hi-C maps. Scer with the click coordinates and Calb with the detected regions
+python plot_sc_ca_maps.py "$sc_map" \
+                          "$ca_map" \
+                          input_coords.tsv \
+                          sc_to_ca_centro.tsv
+
+```
+
+The script `plot_sc_ca_maps.py` is in the `python_codes` directory.
 
 #### Computation and visualisation of Loop spectrum
 
