@@ -92,9 +92,12 @@ TO DO
 
 #### Computation and visualisation of Loop spectrum
 
-From cool files, we first quantified the loop signals for different pairs of cohesin peaks using quantification mode of chromosight: 
+From cool files, we work with 10 kb resolution:
+```cooler coarsen 4DNFIMH3J7RW.mcool::/resolutions/10000 -o 4DNFIMH3J7RW.mcool.10000```
 
-```chromosight quantify --pattern=loops --perc-zero=100 --perc-undetected=100 pairs_intra_groupe_Gm12878Rad21V0416101UniPk.txt.reordered.1Mb contacts2_1_SRR6675327.cool contacts2_1_SRR6675327.cool.quantified```
+We then quantified the loop signals for different pairs of cohesin peaks using quantification mode of chromosight: 
+
+```chromosight quantify --pattern=loops --perc-zero=100 --perc-undetected=100 rad21_hg38_comb_10kb_1mb.bed2d 4DNFIMH3J7RW.mcool.10000 4DNFIMH3J7RW.mcool.10000.quantified```
 
 We then use the python code [spectrum_cycle2_imple.py](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/python_codes/spectrum_cycle2_imple.py) to compute the lowess signal from the scatter plot of the loop scores versus distances between 
 peaks of cohesin and create the corresponding plot. 
