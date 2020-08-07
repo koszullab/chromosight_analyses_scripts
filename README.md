@@ -37,6 +37,7 @@ In order to pull Hi-C data from the SRA and perform the alignment to generate th
 * [`bowtie2`](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
 * [`sra-toolkit`](https://www.ncbi.nlm.nih.gov/books/NBK158900/) (`sratoolkit` on homebrew)
 * [`bedtools`](https://github.com/arq5x/bedtools2) (`bedtools`)
+* [`cooler`](https://github.com/mirnylab/cooler) (`cooler`)
 
 #### Data extraction
 
