@@ -36,10 +36,11 @@ In order to pull Hi-C data from the SRA and perform the alignment to generate th
 
 * [`bowtie2`](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
 * [`sra-toolkit`](https://www.ncbi.nlm.nih.gov/books/NBK158900/) (`sratoolkit` on homebrew)
+* [`bedtools`](https://github.com/arq5x/bedtools2) (`bedtools`)
 
 #### Data extraction
 
-FASTQ reads are available under the GEO accession number GSE107301. They can be pulled and split pairwise with the following command: 
+FASTQ reads are available on SRA servers. They can be pulled and split pairwise with the following command: 
 
 ```bash
 fasterq-dump --split-3 SRR1514669 -O .
@@ -83,6 +84,8 @@ Contact data as cool files can be dowloaded on zenodo [doi:10.5281/zenodo.374209
 
 ```chromosight detect --pattern=loops --min-dist=7000 --perc-undetected=30  --perc-zero=30 SRR2312566_chiapet_ebv_500bp.cool SRR2312566_ebv_loops```
 
+## Fig. 4
+
 ### *Candida Albicans*
 
 ```bash
@@ -124,6 +127,18 @@ The script `plot_sc_ca_maps.py` is in the `python_codes` directory.
 
 ### Computation and visualisation of Loop spectrum
 
+To generate possible pairs from bed files you can use:
+
+```bash
+MINDIST=10000
+MAXDIST=1000000
+bedtools window -a rad21_hg38.bed \
+                -b rad21_hg38.bed \
+                -w $MAXDIST \
+    | awk -vmd=$MINDIST '$1 == $4 && ($5 - $2) >= md {print}' \
+    | sort -k1,1 -k2,2n -k4,4 -k5,5n \
+    > input/scer_cohesin_peaks.bed2d
+```
 
 From cool files, we work with 10 kb resolution:
 ```cooler coarsen 4DNFIMH3J7RW.mcool::/resolutions/10000 -o 4DNFIMH3J7RW.mcool.10000```
