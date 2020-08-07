@@ -124,6 +124,19 @@ The script `plot_sc_ca_maps.py` is in the `python_codes` directory.
 
 #### Computation and visualisation of Loop spectrum
 
+To generate possible pairs from bed files you can use:
+
+```bash
+MINDIST=10000
+MAXDIST=1000000
+bedtools window -a rad21_hg38.bed \
+                -b rad21_hg38.bed \
+                -w $MAXDIST \
+    | awk -vmd=$MINDIST '$1 == $4 && ($5 - $2) >= md {print}' \
+    | sort -k1,1 -k2,2n -k4,4 -k5,5n \
+    > input/scer_cohesin_peaks.bed2d
+```
+
 From cool files, we work with 10 kb resolution:
 ```cooler coarsen 4DNFIMH3J7RW.mcool::/resolutions/10000 -o 4DNFIMH3J7RW.mcool.10000```
 
