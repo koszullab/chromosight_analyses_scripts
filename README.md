@@ -85,3 +85,19 @@ Contact data as cool files can be dowloaded on zenodo [doi:10.5281/zenodo.374209
 
 ```chromosight detect --pattern=loops --min-dist=7000 --perc-undetected=30  --perc-zero=30 contacts2_SRR2312566_RAW_Epstein_500_500_df.cool  out_SRR2312566_epstein```
 
+### *Candida Albicans*
+
+TO DO 
+
+
+#### Computation and v
+
+
+
+
+
+
+
+
+
+
