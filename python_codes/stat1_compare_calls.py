@@ -17,7 +17,7 @@ region = "2:190,800,000-191,900,000"
 
 
 c = cooler.Cooler(cool)
-chromo = pd.read_csv('chromosight/chromosight_loops_small_GSE63525.tsv', sep='\t')
+chromo = pd.read_csv('chromosight/chromosight_loops_GSE63525.tsv', sep='\t')
 hiccups = pd.read_csv('hiccups/GSE63525_GM12878_primary_HiCCUPS_looplist.txt', sep='\t')
 hicexplorer = pd.read_csv('hicexplorer/hicexplorer_loops.tsv', sep='\t', header=None, usecols=[3, 4, 0, 1], names=['chr1', 'x', 'chr2', 'y'])
 cooltools = pd.read_csv('cooltools/cooltools_loops.tsv.postproc', sep='\t', usecols=[0, 1, 3, 4])
