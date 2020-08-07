@@ -90,9 +90,14 @@ Contact data as cool files can be dowloaded on zenodo [doi:10.5281/zenodo.374209
 TO DO 
 
 
-#### Computation and v
+#### Computation and visualisation of Loop spectrum
 
+From cool files, we first quantified the loop signals for different pairs of cohesin peaks using quantification mode of chromosight: 
 
+```chromosight quantify --pattern=loops --perc-zero=100 --perc-undetected=100 pairs_intra_groupe_Gm12878Rad21V0416101UniPk.txt.reordered.1Mb contacts2_1_SRR6675327.cool contacts2_1_SRR6675327.cool.quantified```
+
+We then use the python code [spectrum_cycle2_imple.py](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/python_codes/spectrum_cycle2_imple.py) to computute the lowess signal from the scatter plot of the loop scores versus distances between 
+peaks of cohesin. 
 
 
 
