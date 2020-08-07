@@ -25,7 +25,7 @@ def lighten_color(color, amount=0.5):
     """
     Lightens the given color by multiplying (1-luminosity) by the given amount.
     Input can be matplotlib color string, hex string, or RGB tuple.
-
+ 
     Examples:
     >> lighten_color('g', 0.3)
     >> lighten_color('#F034A3', 0.6)
