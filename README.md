@@ -49,16 +49,14 @@ fasterq-dump --split-3 SRR1514669 -O .
  
 Contact data as cool files can be dowloaded on zenodo [doi:10.5281/zenodo.3742095](https://zenodo.org/record/3742095)
 
-## Fig2.a and b
+## Fig2.
 ### *Saccharomyces cerevisiae*
 
 ```chromosight detect --pattern=loops_small --min-dist 5000 --max-dist 200000  --perc-undetected=30 SRR7706227_SRR7706226_hic_scer_mitotic_2kb.cool SRR7706227_SRR7706226_scer_mitotic_p0.5```
 
-## Fig. 2.c
 ###  *Schizosaccharomyces pombe*
 ```chromosight detect --pattern=loops_small --pearson=0.4 --min-dist 5000 --max-dist 200000 SRR5149256_hic_spo_2kb.cool SRR5149256_spo_loops_p04```
 
-## Fig. 2.d
 ### *Saccharomyces cerevisiae*
 ```chromosight detect --pattern=loops_small --min-dist 5000 --max-dist 200000 --perc-undetected=50 --perc-zero=10 SRR8769554_hic_scer_g1_2kb.cool SRR8769554_scer_g1_loops_p05```
 
@@ -122,7 +120,10 @@ python plot_sc_ca_maps.py "$sc_map" \
 
 The script `plot_sc_ca_maps.py` is in the `python_codes` directory.
 
-#### Computation and visualisation of Loop spectrum
+## Supplementary figures
+
+### Computation and visualisation of Loop spectrum
+
 
 From cool files, we work with 10 kb resolution:
 ```cooler coarsen 4DNFIMH3J7RW.mcool::/resolutions/10000 -o 4DNFIMH3J7RW.mcool.10000```
@@ -133,4 +134,5 @@ We then quantified the loop signals for different pairs of cohesin peaks using q
 
 We then use the python code [spectrum_cycle2_imple.py](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/python_codes/spectrum_cycle2_imple.py) to compute the lowess signal from the scatter plot of the loop scores versus distances between 
 peaks of cohesin and create the corresponding plot. 
+
 
