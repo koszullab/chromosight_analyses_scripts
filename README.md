@@ -154,6 +154,11 @@ We then quantified the loop signals for different pairs of cohesin peaks using q
 We then use the python code [spectrum_cycle2_imple.py](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/python_codes/spectrum_cycle2_imple.py) to compute the lowess signal from the scatter plot of the loop scores versus distances between 
 peaks of cohesin and create the corresponding plot. 
 
+### Detection of loops in other protocols than Hi-C
+
+```detect --pattern=loops_small --threads=10 --min-dist=15000 --max-dist=2000000 4DNFI81RQ431.mcool.10000 out_4DNFI81RQ431.mcool.10000```
+
+
 ### Comparison of STAT1 calls across loop callers
 
 Loops are detected on GSE63525_GM12878_insitu_primary, from Rao et al. 2014. The contact data and HiCCUPS calls were retrieved from the [GEO entry](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525).
