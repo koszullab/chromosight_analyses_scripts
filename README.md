@@ -159,7 +159,7 @@ peaks of cohesin and create the corresponding plot.
 ```detect --pattern=loops_small --threads=10 --min-dist=15000 --max-dist=2000000 4DNFI81RQ431.mcool.10000 out_4DNFI81RQ431.mcool.10000```
 
 
-### Comparison of STAT1 calls across loop callers
+### Comparison of loop calls around CTCF across loop callers
 
 Loops are detected on GSE63525_GM12878_insitu_primary, from Rao et al. 2014. The contact data and HiCCUPS calls were retrieved from the [GEO entry](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525).
 
@@ -173,6 +173,17 @@ cooltools compute-expected -p 4 -o cooltools/cooltools_expected.tsv GSE63525_GM1
 cooltools call-dots GSE63525_GM12878_insitu_primary.mcool::/resolutions/10000 cooltools/cooltools_expected.tsv -o cooltools/cooltools_loops.tsv
 chromosight detect GSE63525_GM12878_insitu_primary.mcool::/resolutions/10000 chromosight/chromosight_loops_small_GSE63525
 ```
-The output calls when then visualized using `python stat1_compare_calls.py`. The script is available in the `python_codes` directory.
+The output calls when then visualized using `python zoom_compare_calls.py`. The script is available in the `python_codes` directory.
+
+### Comparison of loop calls genome wide across loop callers
+
+The output from the 4 commands above were used. The script `zoom_compare_calls.py` also generates a coordinate file for each software named "<software_coords>". Those files all have the same format: two tab-separated columns corresponding to the row and column coordinates of loops detected with the software.
+Thos coordinates files can be fed as input to the `common_patterns.py` script as follows:
+
+> Note: This script requires the python package [upsetplot](https://upsetplot.readthedocs.io/en/latest/index.html), which can be installed using pip.
+
+`python common_patterns.py chromosight/chromosight_coords cooltools/cooltools_coords hicexplorer/hicexplorer_coords hiccups/hiccups_coords`
+This script finds the common loops found by every combination of softwares, allowing an arbitrary jitter for each pattern (+/- 1pixel by default).
+It prints the table with loop counts for each combination, and display an upsetplot.
 
 
