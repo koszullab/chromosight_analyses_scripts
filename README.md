@@ -165,7 +165,7 @@ Loops are detected on GSE63525_GM12878_insitu_primary, from Rao et al. 2014. The
 
 > The contact data is only availabl in hic format, which can be converted to mcool using [hic2cool](https://github.com/4dn-dcic/hic2cool)
 
-For other loop callers, loops were detected with default parameters at 10kb resolution:
+For other loop callers, loops were detected with default parameters at 10kb resolution (output calls available in the `comp_human` folder of the processed_files tarball of the zenodo archive):
 
 ```bash
 hicDetectLoops --matrix GSE63525_GM12878_insitu_primary.mcool::/resolutions/10000 --outFileName hicexplorer/hicexplorer_loops
@@ -178,11 +178,11 @@ The output calls when then visualized using `python zoom_compare_calls.py`. The 
 ### Comparison of loop calls genome wide across loop callers
 
 The output from the 4 commands above were used. The script `zoom_compare_calls.py` also generates a coordinate file for each software named "<software_coords>". Those files all have the same format: two tab-separated columns corresponding to the row and column coordinates of loops detected with the software.
-Thos coordinates files can be fed as input to the `common_patterns.py` script as follows:
+Thos coordinates files can be fed as input to the `common_patterns_upsetplot.py` script as follows:
 
 > Note: This script requires the python package [upsetplot](https://upsetplot.readthedocs.io/en/latest/index.html), which can be installed using pip.
 
-`python common_patterns.py chromosight/chromosight_coords cooltools/cooltools_coords hicexplorer/hicexplorer_coords hiccups/hiccups_coords`
+`python common_patterns_upsetplot.py chromosight/chromosight_coords cooltools/cooltools_coords hicexplorer/hicexplorer_coords hiccups/hiccups_coords`
 This script finds the common loops found by every combination of softwares, allowing an arbitrary jitter for each pattern (+/- 1pixel by default).
 It prints the table with loop counts for each combination, and display an upsetplot.
 
