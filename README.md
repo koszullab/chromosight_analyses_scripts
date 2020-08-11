@@ -165,7 +165,7 @@ Loops are detected on GSE63525_GM12878_insitu_primary, from Rao et al. 2014. The
 
 > The contact data is only availabl in hic format, which can be converted to mcool using [hic2cool](https://github.com/4dn-dcic/hic2cool)
 
-For other loop callers, loops were detected with default parameters at 10kb resolution (output calls available in the `comp_human` folder of the processed_files tarball of the zenodo archive):
+For other loop callers, loops were detected with default parameters at 10kb resolution. Output calls available in the `GSE63525_loop_calls` folder of the `processed_files.tar.gz` tarball of [the zenodo entry](https://doi.org/10.5281/zenodo.3742094):
 
 ```bash
 hicDetectLoops --matrix GSE63525_GM12878_insitu_primary.mcool::/resolutions/10000 --outFileName hicexplorer/hicexplorer_loops
