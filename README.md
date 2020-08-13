@@ -57,36 +57,36 @@ Benchmark input and output data, as well as the code used, are archived and docu
 ## Fig. 2
 ### *Saccharomyces cerevisiae*
 
-```chromosight detect --pattern=loops_small --min-dist 5000 --max-dist 200000  --perc-undetected=30 SRR7706227_SRR7706226_hic_scer_mitotic_2kb.cool SRR7706227_SRR7706226_scer_mitotic_p0.5```
+`chromosight detect --pattern=loops_small --min-dist 5000 --max-dist 200000  --perc-undetected=30 SRR7706227_SRR7706226_hic_scer_mitotic_2kb.cool SRR7706227_SRR7706226_scer_mitotic_p0.5`
 
 ###  *Schizosaccharomyces pombe*
-```chromosight detect --pattern=loops_small --pearson=0.4 --min-dist 5000 --max-dist 200000 SRR5149256_hic_spo_2kb.cool SRR5149256_spo_loops_p04```
+`chromosight detect --pattern=loops_small --pearson=0.4 --min-dist 5000 --max-dist 200000 SRR5149256_hic_spo_2kb.cool SRR5149256_spo_loops_p04`
 
 ### *Saccharomyces cerevisiae*
-```chromosight detect --pattern=loops_small --min-dist 5000 --max-dist 200000 --perc-undetected=50 --perc-zero=10 SRR8769554_hic_scer_g1_2kb.cool SRR8769554_scer_g1_loops_p05```
+`chromosight detect --pattern=loops_small --min-dist 5000 --max-dist 200000 --perc-undetected=50 --perc-zero=10 SRR8769554_hic_scer_g1_2kb.cool SRR8769554_scer_g1_loops_p05`
 
 #### For comparison of groups of loops
 
-```bash script_common_loops5.bh SRR7706227_SRR7706226_hic_scer_mitotic_2kb.cool mitotic SRR8769554_hic_scer_g1_2kb.cool G1```
+`bash script_common_loops5.bh SRR7706227_SRR7706226_hic_scer_mitotic_2kb.cool mitotic SRR8769554_hic_scer_g1_2kb.cool G1`
 
 ## Fig. 3
 
 ### *Human*
 
-```chromosight detect --pattern=loops_small  --min-dist=15000 --max-dist=2000000 SRR6675327_hic_hsap_GM12878_10kb.cool SRR6675327_GM12878_loops_p05```
-
-```chromosight detect --pattern=borders --pearson=0.4   SRR6675327_hic_hsap_GM12878_10kb.cool SRR6675327_GM12878_borders_p04```
-
-```chromosight detect --pattern=hairpins --pearson=0.4  SRR6675327_hic_hsap_GM12878_10kb.cool SRR6675327_GM12878_hairpins_04```
+```bash
+chromosight detect --pattern=loops_small  --min-dist=15000 --max-dist=2000000 SRR6675327_hic_hsap_GM12878_10kb.cool SRR6675327_GM12878_loops_p05
+chromosight detect --pattern=borders --pearson=0.4   SRR6675327_hic_hsap_GM12878_10kb.cool SRR6675327_GM12878_borders_p04
+chromosight detect --pattern=hairpins --pearson=0.4  SRR6675327_hic_hsap_GM12878_10kb.cool SRR6675327_GM12878_hairpins_04
+```
 
 
 ### *Bacillus subtilis*
 
-```chromosight detect --pearson=0.3 --min-dist 12000 --max-dist 4300000 --perc-undetected=30 SRR2214080_3cseq_bsub_2kb.cool out_bsub_loops_p03```
+`chromosight detect --pearson=0.3 --min-dist 12000 --max-dist 4300000 --perc-undetected=30 SRR2214080_3cseq_bsub_2kb.cool out_bsub_loops_p03`
 
 ### *Epstein Barr Virus (EBV)*
 
-```chromosight detect --pattern=loops --min-dist=7000 --perc-undetected=30  --perc-zero=30 SRR2312566_chiapet_ebv_500bp.cool SRR2312566_ebv_loops```
+`chromosight detect --pattern=loops --min-dist=7000 --perc-undetected=30  --perc-zero=30 SRR2312566_chiapet_ebv_500bp.cool SRR2312566_ebv_loops`
 
 ## Fig. 4
 
@@ -145,18 +145,18 @@ bedtools window -a rad21_hg38_top4000.bed \
 ```
 
 From cool files, we work with 10 kb resolution:
-```cooler coarsen 4DNFIMH3J7RW.mcool::/resolutions/10000 -o 4DNFIMH3J7RW.mcool.10000```
+`cooler coarsen 4DNFIMH3J7RW.mcool::/resolutions/10000 -o 4DNFIMH3J7RW.mcool.10000`
 
 We then quantified the loop signals for different pairs of cohesin peaks using quantification mode of chromosight: 
 
-```chromosight quantify --pattern=loops --perc-zero=100 --perc-undetected=100 rad21_hg38_comb_10kb_1mb.bed2d 4DNFIMH3J7RW.mcool.10000 4DNFIMH3J7RW.mcool.10000.quantified```
+`chromosight quantify --pattern=loops --perc-zero=100 --perc-undetected=100 rad21_hg38_comb_10kb_1mb.bed2d 4DNFIMH3J7RW.mcool.10000 4DNFIMH3J7RW.mcool.10000.quantified`
 
 We then use the python code [spectrum_cycle2_imple.py](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/python_codes/spectrum_cycle2_imple.py) to compute the lowess signal from the scatter plot of the loop scores versus distances between 
 peaks of cohesin and create the corresponding plot. 
 
 ### Detection of loops in other protocols than Hi-C
 
-```detect --pattern=loops_small --threads=10 --min-dist=15000 --max-dist=2000000 4DNFI81RQ431.mcool.10000 out_4DNFI81RQ431.mcool.10000```
+`detect --pattern=loops_small --threads=10 --min-dist=15000 --max-dist=2000000 4DNFI81RQ431.mcool.10000 out_4DNFI81RQ431.mcool.10000`
 
 
 ### Comparison of loop calls around CTCF across loop callers
