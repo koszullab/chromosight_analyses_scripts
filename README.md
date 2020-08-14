@@ -236,6 +236,8 @@ The output calls when then visualized using `python zoom_compare_calls.py`. The 
 
 ### Comparison of loop calls genome wide across loop callers
 
+> Note: all files required for this section are available in the `GSE63525_loop_calls` directory in the `processed_files.tar.gz` archive of the zenodo record.
+
 The output from the 4 commands above were used. The script `zoom_compare_calls.py` also generates a coordinate file for each software named "<software_coords>". Those files all have the same format: two tab-separated columns corresponding to the row and column coordinates of loops detected with the software.
 Thos coordinates files can be fed as input to the `common_patterns_upsetplot.py` script as follows:
 
