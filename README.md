@@ -245,4 +245,15 @@ Thos coordinates files can be fed as input to the `common_patterns_upsetplot.py`
 This script finds the common loops found by every combination of softwares, allowing an arbitrary jitter for each pattern (+/- 1pixel by default).
 It prints the table with loop counts for each combination, and display an upsetplot.
 
+To compute the overlap between CTCF peaks and the loop calls from each software, we used the script `common_chip_patterns.py`. Note the first argument is used as the reference set (here, ChIP-seq):
+
+```bash
+python common_chip_patterns.py \
+       ctcf_chipseq/ctcf_hg19_comb_10kb_2mb_coords \
+       chromosight/chromosight_coords \
+       hicexplorer/hicexplorer_coords \
+       hiccups/hiccups_coords \
+       cooltools/cooltools_coords
+```
+
 
