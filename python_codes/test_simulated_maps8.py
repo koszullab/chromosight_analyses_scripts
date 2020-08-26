@@ -7,6 +7,7 @@ Notably we try other pattern of borders (the generic ones) to make propensity ma
 import random
 import itertools
 import os
+from os.path import join
 import sys
 import time
 from pathlib import Path
@@ -122,7 +123,7 @@ for random_i in range(1, Nrealisations):
         if 0 < p < n:
             borders_random.append(p)
     np.savetxt(
-        "Borders_realisation" + "_" + str(random_i) + ".txt",
+        join(out_dir, f"Borders_realisation_{random_i}.txt"),
         borders_random,
         fmt="%d",
     )
@@ -145,14 +146,14 @@ for random_i in range(1, Nrealisations):
         except IndexError:
             continue
         mat_borders *= mat_borders_i
-    mat_borders = (
-        mat_borders + np.transpose(mat_borders)
-    ) / 2  #  resymetrisation
+    # Make the matrix symmetric
+    mat_borders = (mat_borders + np.transpose(mat_borders)) / 2
 
     # Adding of loops patterns:  ----------------------------------------------
     combi_pos = list(itertools.combinations(borders_random, 2))
-    loops_random = random.sample(combi_pos, 10)
+    loops_random = random.sample(combi_pos, min(10, len(combi_pos)))
 
+    # Generate loops coordinates aligned with borders
     loops_random = []
     for b1 in borders_random:
         for b2 in borders_random:
@@ -165,21 +166,21 @@ for random_i in range(1, Nrealisations):
                     loops_random.append((b1, b2))
     loops_random = set(loops_random)
     np.savetxt(
-        "Loops_realisation" + "_" + str(random_i) + ".txt",
+        join(out_dir, f"Loops_realisation_{random_i}.txt"),
         list(loops_random),
         fmt="%d",
     )
 
     mat_loops = np.ones(mat.shape)
-    for l in loops_random:
-        l = np.array(l).astype(int)
+    for loop in loops_random:
+        loop = np.array(loop).astype(int)
         mat_loops_i = np.ones(mat_loops.shape)
         # Note we fill the upper triangle (l[0] > l[1])
         try:
             mat_loops_i[
                 np.ix_(
-                    range(l[1] - l_rad, l[1] + l_rad + 1),
-                    range(l[0] - l_rad, l[0] + l_rad + 1),
+                    range(loop[1] - l_rad, loop[1] + l_rad + 1),
+                    range(loop[0] - l_rad, loop[0] + l_rad + 1),
                 )
             ] = ratio_loops
         # Skip if either loop anchor goes out of the map
@@ -219,7 +220,7 @@ for random_i in range(1, Nrealisations):
     mat_loops[np.diag_indices_from(mat_loops)] /= 2
 
     np.savetxt(
-        "MAT_RAW_realisation" + "_" + str(random_i) + ".txt",
+        join(out_dir, f"MAT_RAW_realisation_{random_i}.txt"),
         mat_simul,
         fmt="%d",
     )
@@ -227,7 +228,7 @@ for random_i in range(1, Nrealisations):
     matscn2 = hcs.normalize_dense(mat_simul, iterations=30)
     matscn2 = (matscn2 + np.transpose(matscn2)) / 2.0
     np.savetxt(
-        "MAT_NORMALISED_realisation" + "_" + str(random_i) + ".txt",
+        join(out_dir, f"MAT_NORMALISED_realisation{random_i}.txt"),
         matscn2,
         fmt="%e",
     )
@@ -240,7 +241,7 @@ for random_i in range(1, Nrealisations):
         vmax=0.8,
     )
     plt.savefig(
-        "MAT_realisation" + str(random_i) + ".png", dpi=500, format="png"
+        join(out_dir, f"MAT_realisation{random_i}.png"), dpi=500, format="png",
     )
 
 
