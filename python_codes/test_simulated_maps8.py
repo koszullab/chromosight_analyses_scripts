@@ -39,10 +39,10 @@ n1 = shape(m)[0]  # size of the chromosome contact map
 
 # Load patterns
 # Generic pattern:
-RATIO_CIDs = ck.borders["kernels"][0]
-RATIO_CIDs = RATIO_CIDs ** 0.2  # to attenuate a bit
-RATIO_LOOPS = ck.loops["kernels"][0]
-RATIO_LOOPS = RATIO_LOOPS ** 0.7  # to attenuate a bit
+ratio_borders = ck.borders["kernels"][0]
+ratio_borders = ratio_borders ** 0.2  # to attenuate a bit
+ratio_loops = ck.loops["kernels"][0]
+ratio_loops = ratio_loops ** 0.7  # to attenuate a bit
 
 # Remove borders from experimental data overlapping empty bins:
 chrm = 5
@@ -50,15 +50,15 @@ border_pos = list(borders_pos)
 for b in borders_pos.copy():
     # If any bad (empty) bin is closer to a border than the radius of the
     # pattern template, drop it
-    if np.any(np.abs(bad_bins - b) < max(ratio_cids.shape)) in b:
+    if np.any(np.abs(bad_bins - b) < max(ratio_borders.shape)) in b:
         borders_pos.remove(b)
 # To convert the 1D vetor into matrice object:
-MAT_INDICES = np.zeros((shape(m)))
+mat_indices = np.zeros((shape(m)))
 compt = 0
-VECT_COMPT = []
+vect_compt = []
 for i, j in itertools.product(range(n1), range(n1)):
-    MAT_INDICES[i, j] = compt
-    VECT_COMPT.append((i, j))
+    mat_indices[i, j] = compt
+    vect_compt.append((i, j))
     compt += 1
 
 #  Genomic distance law from experiemental data:
@@ -79,17 +79,17 @@ for i in range(1, len(b)):
 s = shape(matscn1)[0]
 
 # Genomic distance law:
-MAT_GENO = np.zeros((shape(m)))
+mat_geno = np.zeros((shape(m)))
 for i in range(0, s):
     for j in range(0, s):
-        MAT_GENO[i, j] = prob_d_lowess[abs(j - i)]
+        mat_geno[i, j] = prob_d_lowess[abs(j - i)]
 
-if len(MAT_GENO[MAT_GENO < 0]) > 0:
+if len(mat_geno[mat_geno < 0]) > 0:
     raise ValueError(
         f"Presence of {len(mat_geno[mat_geno < 0])} negative elements in the "
         "distance law. Try changing Loess parameters."
     )
-MAT_GENO[MAT_GENO < 0] = 0
+mat_geno[mat_geno < 0] = 0
 
 
 # ------------------------------------------------------------------------------
@@ -118,24 +118,30 @@ for random_i in range(1, Nrealisations):
     )
 
     # Adding of CIDs/TADs borders:--------------------------------------------
-    MAT_CIDs = np.ones((shape(m)))
-    area = int(shape(RATIO_CIDs)[0] / 2)
-    MAT_CIDs = np.concatenate((MAT_CIDs, MAT_CIDs, MAT_CIDs), axis=1)
-    MAT_CIDs = np.concatenate((MAT_CIDs, MAT_CIDs, MAT_CIDs), axis=0)
+    mat_borders = np.ones((shape(m)))
+    area = int(shape(ratio_borders)[0] / 2)
+    mat_borders = np.concatenate(
+        (mat_borders, mat_borders, mat_borders), axis=1
+    )
+    mat_borders = np.concatenate(
+        (mat_borders, mat_borders, mat_borders), axis=0
+    )
     nb = 0
     for bi in borders_random:
         bi = int(bi)
         nb += 1
-        MAT_CIDs_i = np.ones((shape(MAT_CIDs)))
-        MAT_CIDs_i[
+        mat_borders_i = np.ones((shape(mat_borders)))
+        mat_borders_i[
             np.ix_(
                 range(n1 + bi - area, n1 + bi + area + 1),
                 range(n1 + bi - area, n1 + bi + area + 1),
             )
-        ] = RATIO_CIDs
-        MAT_CIDs = MAT_CIDs * MAT_CIDs_i
-    MAT_CIDs = MAT_CIDs[np.ix_(range(n1, 2 * n1), range(n1, 2 * n1))]
-    MAT_CIDs = (MAT_CIDs + np.transpose(MAT_CIDs)) / 2  #  resymetrisation
+        ] = ratio_borders
+        mat_borders = mat_borders * mat_borders_i
+    mat_borders = mat_borders[np.ix_(range(n1, 2 * n1), range(n1, 2 * n1))]
+    mat_borders = (
+        mat_borders + np.transpose(mat_borders)
+    ) / 2  #  resymetrisation
 
     # Adding of LOOPS patterns:  ----------------------------------------------
     combi_pos = list(itertools.combinations(borders_random, 2))
@@ -154,64 +160,64 @@ for random_i in range(1, Nrealisations):
         list(loops_random),
         fmt="%d",
     )
-    MAT_LOOPS = np.ones((shape(m)))
-    area = int(shape(RATIO_LOOPS)[0] / 2)
-    MAT_LOOPS = np.concatenate((MAT_LOOPS, MAT_LOOPS, MAT_LOOPS), axis=1)
-    MAT_LOOPS = np.concatenate((MAT_LOOPS, MAT_LOOPS, MAT_LOOPS), axis=0)
+    mat_loops = np.ones((shape(m)))
+    area = int(shape(ratio_loops)[0] / 2)
+    mat_loops = np.concatenate((mat_loops, mat_loops, mat_loops), axis=1)
+    mat_loops = np.concatenate((mat_loops, mat_loops, mat_loops), axis=0)
     for l in loops_random:
-        MAT_LOOPS_i = np.ones((shape(MAT_LOOPS)))
-        MAT_LOOPS_i[
+        mat_loops_i = np.ones((shape(mat_loops)))
+        mat_loops_i[
             np.ix_(
                 range(n1 + int(l[0]) - area, n1 + int(l[0]) + area + 1),
                 range(n1 + int(l[1]) - area, n1 + int(l[1]) + area + 1),
             )
-        ] = RATIO_LOOPS
-        MAT_LOOPS = MAT_LOOPS * MAT_LOOPS_i
-        MAT_LOOPS_i[
+        ] = ratio_loops
+        mat_loops = mat_loops * mat_loops_i
+        mat_loops_i[
             np.ix_(
                 range(n1 + int(l[1]) - area, n1 + int(l[1]) + area + 1),
                 range(n1 + int(l[0]) - area, n1 + int(l[0]) + area + 1),
             )
-        ] = np.transpose(RATIO_LOOPS)
-        MAT_LOOPS = MAT_LOOPS * MAT_LOOPS_i
+        ] = np.transpose(ratio_loops)
+        mat_loops = mat_loops * mat_loops_i
 
-    MAT_LOOPS = MAT_LOOPS[
+    mat_loops = mat_loops[
         np.ix_(range(n1, 2 * n1), range(n1, 2 * n1))
     ]  #  we refocus
-    MAT_LOOPS = (MAT_LOOPS + np.transpose(MAT_LOOPS)) / 2  #  resymetrisation
-    #    imshow(MAT_LOOPS, vmin=0.0, vmax = 2.0, interpolation ="none", cmap = "seismic")
+    mat_loops = (mat_loops + np.transpose(mat_loops)) / 2  #  resymetrisation
+    #    imshow(mat_loops, vmin=0.0, vmax = 2.0, interpolation ="none", cmap = "seismic")
     #    colorbar()
 
     # Complete Propensities Map with all features :
-    #    MAT_PROPEN = MAT_GENO * MAT_CIDs
-    #    MAT_PROPEN = MAT_GENO * MAT_LOOPS
-    MAT_PROPEN = MAT_GENO * MAT_CIDs * MAT_LOOPS
-    MAT_PROPEN = scn.scn_func(MAT_PROPEN, 0)
+    #    mat_propen = mat_geno * mat_borders
+    #    mat_propen = mat_geno * mat_loops
+    mat_propen = mat_geno * mat_borders * mat_loops
+    mat_propen = scn.scn_func(mat_propen, 0)
 
     # Conversion of the propensities matrice into a vector :
-    VECT_PROPEN = np.reshape(MAT_PROPEN, (s * s, 1))
-    VECT_PROPEN = VECT_PROPEN * 1.0 / sum(VECT_PROPEN)
-    VECT_PROPEN = np.squeeze(VECT_PROPEN)
-    VECT_INDICES = range(0, s * s)
-    custm = stats.rv_discrete(name="custm", values=(VECT_INDICES, VECT_PROPEN))
+    vect_propen = np.reshape(mat_propen, (s * s, 1))
+    vect_propen = vect_propen * 1.0 / sum(vect_propen)
+    vect_propen = np.squeeze(vect_propen)
+    vect_indices = range(0, s * s)
+    custm = stats.rv_discrete(name="custm", values=(vect_indices, vect_propen))
 
     Nreads2 = int(Nreads / 2)
-    VECT_REALISATION = custm.rvs(size=Nreads2)  #  time consuming !!
+    vect_realisation = custm.rvs(size=Nreads2)  #  time consuming !!
 
     # Come back to the matrice:
-    MAT_SIMUL = np.zeros((shape(m)))
-    for v in VECT_REALISATION:
-        (i, j) = VECT_COMPT[v]
-        MAT_SIMUL[i, j] += 1
-        MAT_SIMUL[j, i] += 1
+    mat_simul = np.zeros((shape(m)))
+    for v in vect_realisation:
+        (i, j) = vect_compt[v]
+        mat_simul[i, j] += 1
+        mat_simul[j, i] += 1
 
     np.savetxt(
         "MAT_RAW_realisation" + "_" + str(random_i) + ".txt",
-        MAT_SIMUL,
+        mat_simul,
         fmt="%d",
     )
 
-    matscn2 = scn.scn_func(MAT_SIMUL, 0)
+    matscn2 = scn.scn_func(mat_simul, 0)
     matscn2 = (matscn2 + np.transpose(matscn2)) / 2.0
     np.savetxt(
         "MAT_NORMALISED_realisation" + "_" + str(random_i) + ".txt",
