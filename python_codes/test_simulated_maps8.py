@@ -41,7 +41,7 @@ bad_bins = bins.loc[np.isnan(bins.weight)].index.values
 nreads = clr.matrix(sparse=True, balance=False).fetch(chrom).sum()
 # Desired number of simulated matrices to generate
 Nrealisations = 10
-n = m.shape[0]  # size of the chromosome contact map
+n = mat.shape[0]  # size of the chromosome contact map
 
 # Load patterns
 # Generic pattern:
@@ -49,23 +49,34 @@ ratio_borders = ck.borders["kernels"][0]
 ratio_borders = ratio_borders ** 0.2  # to attenuate a bit
 ratio_loops = ck.loops["kernels"][0]
 ratio_loops = ratio_loops ** 0.7  # to attenuate a bit
+# Loops and borders windows radii
+l_rad = int(ratio_loops.shape[0] // 2)
+b_rad = int(ratio_borders.shape[0] // 2)
 
 # Remove borders from experimental data overlapping empty bins:
 borders_pos = list(borders_pos)
 for b in borders_pos.copy():
     # If any bad (empty) bin is closer to a border than the radius of the
     # pattern template, drop it
-    if np.any(np.abs(bad_bins - b) < max(ratio_borders.shape)) in b:
+    if np.any(np.abs(bad_bins - b) < max(ratio_borders.shape)):
         borders_pos.remove(b)
 
-# To convert the 1D vector into matrice object:
-mat_indices = np.zeros(mat.shape)
-compt = 0
-vect_compt = []
-for i, j in itertools.product(range(n), range(n)):
-    mat_indices[i, j] = compt
-    vect_compt.append((i, j))
-    compt += 1
+
+def vec1d_to_2d(pos, n_cols):
+    """
+    Given a 1-dimensional position, return a tuple (row,col) indicating the
+    corresponding coordinate in a matrix of width n_cols.
+    """
+    return pos // n_cols, pos % n_cols
+
+
+def vec2d_to_1d(row, col, n_cols):
+    """
+    Given row and column indices for a matrix of width n_cols, return the
+    corresponding 1-dimensional index.
+    """
+    return row * n_cols + col
+
 
 #  Genomic distance law from experimental data:
 d_smooth = cup.distance_law(
@@ -74,7 +85,6 @@ d_smooth = cup.distance_law(
     smooth=True,
 )
 prob_d_smooth = d_smooth / np.sum(d_smooth)
-
 # TADs size distribution:
 borders_sizes = []
 for i in range(1, len(borders_pos)):
@@ -87,11 +97,6 @@ for i in range(0, n):
     for j in range(0, n):
         mat_geno[i, j] = prob_d_smooth[abs(j - i)]
 
-if len(mat_geno[mat_geno < 0]) > 0:
-    raise ValueError(
-        f"Presence of {len(mat_geno[mat_geno < 0])} negative elements in the "
-        "distance law. Try changing Loess parameters."
-    )
 mat_geno[mat_geno < 0] = 0
 
 
@@ -113,8 +118,8 @@ for random_i in range(1, Nrealisations):
                 size=None,
             )
         )
-        p = p + sep
-        if p < n:
+        p += sep
+        if 0 < p < n:
             borders_random.append(p)
     np.savetxt(
         "Borders_realisation" + "_" + str(random_i) + ".txt",
@@ -124,20 +129,21 @@ for random_i in range(1, Nrealisations):
 
     # Adding of CIDs/TADs borders:--------------------------------------------
     mat_borders = np.ones(mat.shape)
-    area = int(ratio_borders.shape[0] // 2)
     nb = 0
     for bi in borders_random:
         bi = int(bi)
         nb += 1
-        if bi > (n - area) or bi <= area:
-            continue
         mat_borders_i = np.ones(mat_borders.shape)
-        mat_borders_i[
-            np.ix_(
-                range(n + bi - area, n + bi + area + 1),
-                range(n + bi - area, n + bi + area + 1),
-            )
-        ] = ratio_borders
+        try:
+            mat_borders_i[
+                np.ix_(
+                    range(bi - b_rad, bi + b_rad + 1),
+                    range(bi - b_rad, bi + b_rad + 1),
+                )
+            ] = ratio_borders
+        # Skip if the border window goes out of the map
+        except IndexError:
+            continue
         mat_borders *= mat_borders_i
     mat_borders = (
         mat_borders + np.transpose(mat_borders)
@@ -163,22 +169,22 @@ for random_i in range(1, Nrealisations):
         list(loops_random),
         fmt="%d",
     )
+
     mat_loops = np.ones(mat.shape)
-    area = int(ratio_loops.shape[0] // 2)
     for l in loops_random:
         l = np.array(l).astype(int)
-        # Check if either loop anchor goes out of the map
-        if np.any(l > (n - area)) or np.any(l <= area):
-            continue
         mat_loops_i = np.ones(mat_loops.shape)
-        # Note we fill the upper triangle (l[0] < l[1])
-        mat_loops_i[
-            np.ix_(
-                range(n + l[0] - area, n + l[0] + area + 1),
-                range(n + l[1] - area, n + l[1] + area + 1),
-            )
-        ] = ratio_loops
-        mat_loops = mat_loops * mat_loops_i
+        # Note we fill the upper triangle (l[0] > l[1])
+        try:
+            mat_loops_i[
+                np.ix_(
+                    range(l[1] - l_rad, l[1] + l_rad + 1),
+                    range(l[0] - l_rad, l[0] + l_rad + 1),
+                )
+            ] = ratio_loops
+        # Skip if either loop anchor goes out of the map
+        except IndexError:
+            continue
         mat_loops *= mat_loops_i
     # Set lower triangle to 0
     mat_loops = np.triu(mat_loops)
@@ -191,7 +197,6 @@ for random_i in range(1, Nrealisations):
     # distance law map, the border map and the loop map:
     mat_propen = mat_geno * mat_borders * mat_loops
     mat_propen = hcs.normalize_dense(mat_propen, iterations=40)
-
     # Conversion of the propensities matrice into a 1D vector :
     vect_propen = np.reshape(mat_propen, (n * n, 1))
     # Convert to probabilities
@@ -206,7 +211,7 @@ for random_i in range(1, Nrealisations):
     # Come back to the matrice and fill with sampled contacts:
     mat_simul = np.zeros(mat.shape)
     for v in vect_realisation:
-        (i, j) = vect_compt[v]
+        (i, j) = vec1d_to_2d(v, n)
         mat_simul[i, j] += 1
 
     # Again, symmetrise matrix, accounting for doubled diagonal
