@@ -47,6 +47,13 @@ FASTQ reads are available on SRA servers. They can be pulled and split pairwise 
 fasterq-dump --split-3 SRR1514669 -O .
 ```
 
+## Generation of simulated data
+In order to carry out a test bench of our algorithm and also to be able to compare its performance with other methods, we generated simulated contact maps containing loops and domains. These contact maps are based on the statistical features of contact maps of S.Cerevisiae yeast. 
+The principle is that the general characteristics of the experimental map should be found in the simulated maps. For this, the frequency of contact as a function of genomic distance, the number of chromosomal domains, the presence of loops must be as close as possible to the experimental data so that it is difficult for an eye to tell the difference. 
+The algorithm test_simulated_maps8.py calculates these different signals from experimental and recreate data with similar properties. 
+The loops and borders are positioned by multiplying by the corresponding pattern. A contact probability map is constructed from which the contacts are drawn respecting the number of reads of the experiment.
+
+
 ## Detection analysis
  
 Contact data (cool files) and BED files used in the manuscript can be dowloaded on zenodo [doi:10.5281/zenodo.3742094](https://doi.org/10.5281/zenodo.3742094)
