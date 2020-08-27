@@ -49,7 +49,7 @@ n = mat.shape[0]  # size of the chromosome contact map
 ratio_borders = ck.borders["kernels"][0]
 ratio_borders = ratio_borders ** 0.2  # to attenuate a bit
 ratio_loops = ck.loops["kernels"][0]
-ratio_loops = ratio_loops ** 0.7  # to attenuate a bit
+ratio_loops = ratio_loops  # to attenuate a bit
 # Loops and borders windows radii
 l_rad = int(ratio_loops.shape[0] // 2)
 b_rad = int(ratio_borders.shape[0] // 2)
@@ -83,8 +83,9 @@ def vec2d_to_1d(row, col, n_cols):
 d_smooth = cup.distance_law(
     clr.matrix(sparse=True, balance=True).fetch(chrom).tocsr(),
     detectable_bins=~np.isnan(bins.weight),
-    smooth=True,
+    smooth=False,
 )
+d_smooth[np.isnan(d_smooth)] = 0
 prob_d_smooth = d_smooth / np.sum(d_smooth)
 # TADs size distribution:
 borders_sizes = []
@@ -205,19 +206,23 @@ for random_i in range(1, Nrealisations):
     vect_propen = np.squeeze(vect_propen)
     vect_indices = range(0, n * n)
     # Generate a distribution from the vector  of probabilities and sample contacts
-    custm = stats.rv_discrete(name="custm", values=(vect_indices, vect_propen))
-    nreads2 = int(nreads / 2)
-    vect_realisation = custm.rvs(size=nreads2)  #  time consuming !!
 
-    # Come back to the matrice and fill with sampled contacts:
+    # Use the probability distribution to sample contacts, time consuming !!
     mat_simul = np.zeros(mat.shape)
-    for v in vect_realisation:
-        (i, j) = vec1d_to_2d(v, n)
-        mat_simul[i, j] += 1
+    nreads_left = nreads
+    while nreads_left:
+        # Fill by batches of 100k contacts to spare memory
+        sample_batch = np.random.choice(
+            vect_indices, size=min(100000, nreads_left), p=vect_propen
+        )
+        batch_rows, batch_cols = vec1d_to_2d(sample_batch, n)
+        mat_simul[batch_rows, batch_cols] += 1
+        print(f"{nreads - nreads_left} / {nreads} contacts subsampled")
+        nreads_left -= len(sample_batch)
 
-    # Again, symmetrise matrix, accounting for doubled diagonal
+    # Symmetrise matrix
     mat_simul += np.transpose(mat_simul)
-    mat_loops[np.diag_indices_from(mat_loops)] /= 2
+    mat_simul /= 2
 
     np.savetxt(
         join(out_dir, f"MAT_RAW_realisation_{random_i}.txt"),
