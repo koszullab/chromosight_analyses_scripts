@@ -12,7 +12,6 @@ import sys
 import time
 from pathlib import Path
 import numpy as np
-import scipy.stats as stats
 import matplotlib.pyplot as plt
 import cooler
 import hicstuff.hicstuff as hcs
