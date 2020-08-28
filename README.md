@@ -1,26 +1,32 @@
-## Codes developped for the analyses presented in the Chromosight paper
+# Codes developped for the analyses presented in the Chromosight paper
 
-This repo contains instructions to reproduce the different figures and results from our paper, **[Computer vision for pattern detection in chromosome contact maps](https://www.biorxiv.org/content/10.1101/2020.03.08.981910v3.full)** by Cyril Matthey-Doret et al., which showcases its signature program, [chromosight](https://github.com/koszullab/chromosight). See also the [official documentation of the program](https://chromosight.readthedocs.io), complete with demos and tutorials for your own use cases.
+This repository contains instructions to reproduce the different figures and results from our paper, **[Computer vision for pattern detection in chromosome contact maps](https://www.biorxiv.org/content/10.1101/2020.03.08.981910v3.full)** by Cyril Matthey-Doret et al., which showcases its signature program, [chromosight](https://github.com/koszullab/chromosight). See also the [official documentation of the program](https://chromosight.readthedocs.io), complete with demos and tutorials for your own use cases.
 
+## Table of contents
 
-### Table of contents
+* [Requirements](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/README.md#requirements)
+* [Raw data extraction and alignment](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/README.md#data-extraction)
+* [Generation of simulated data](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/README.md#generation-of-simulated-data)
+* [Analyses](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/README.md#analyses)
+* [Supplementary figures](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/README.md#supplementary-figures)
 
-* Requirements
-* [Raw data extraction and alignment](https://github.com/koszullab/chromosight_codes_for_bioanalysis/blob/master/README.md#raw-data-extraction-and-alignment)
+## Requirements
 
-#### Requirements
+### Environment
 
-##### Environment
-
-Chromosight is designed to run on UNIX-like environments (e.g. Linux, OS X, Windows Subsystems for Linux, etc.) and has been tested on Ubuntu >= 14.10. It is entirely written in Python 3.6 with no planned support for earlier versions, including Python 2. The version used in the preprint is 1.1.2 and is installable from PyPI:
+Chromosight is designed to run on UNIX-like environments (e.g. Linux, OS X, Windows Subsystems for Linux, etc.) and has been tested on Ubuntu >= 14.10. It is entirely written in Python 3.6 with no planned support for earlier versions, including Python 2. The version used in the preprint is 1.1.2 and is installable from PyPI or conda:
 
 ```sh
-python3 -m pip install --user chromosight==1.1.2
+python3 -m pip install --user chromosight
+```
+or
+```sh
+conda install -c bioconda chromosight
 ```
 
-##### Python packages
+### Python packages
 
-If for some reason you need to install chromosight manually, then the following packages are required (from requirements.txt):
+If for some reason you need to install chromosight manually (without using pip or conda), then the following packages are required (from requirements.txt):
 
 * cooler
 * docopt
@@ -30,7 +36,7 @@ If for some reason you need to install chromosight manually, then the following 
 * scikit-learn
 * scipy>= 1.3
 
-##### External programs
+### External programs
 
 In order to pull Hi-C data from the SRA and perform the alignment to generate the contact maps, you will need the following programs (directly available on the  Ubuntu repositories):
 
@@ -39,7 +45,7 @@ In order to pull Hi-C data from the SRA and perform the alignment to generate th
 * [`bedtools`](https://github.com/arq5x/bedtools2) (`bedtools`)
 * [`cooler`](https://github.com/mirnylab/cooler) (`cooler`)
 
-#### Data extraction
+## Data extraction
 
 FASTQ reads are available on SRA servers. They can be pulled and split pairwise with the following command: 
 
@@ -54,37 +60,31 @@ The algorithm test_simulated_maps8.py calculates these different signals from ex
 The loops and borders are positioned by multiplying by the corresponding pattern. A contact probability map is constructed from which the contacts are drawn respecting the number of reads of the experiment.
 
 
-## Detection analysis
- 
+## Analyses
+
+This section contains the command lines and scripts used to generate figures from the manuscript.
 Contact data (cool files) and BED files used in the manuscript can be dowloaded on zenodo [doi:10.5281/zenodo.3742094](https://doi.org/10.5281/zenodo.3742094)
-## Fig. 1
+
+### Fig. 1
 
 Benchmark input and output data, as well as the code used, are archived and documented in the [Zenodo entry](https://doi.org/10.5281/zenodo.3742094).
 
-## Fig. 2
-### *Saccharomyces cerevisiae*
+### Fig. 2
+
+Generally speaking, the chromosight parameters used for loop detection in figure 2 are the following:
+
+**Saccharomyces cerevisiae, M phase**
 
 ```bash
 chromosight detect --pattern=loops_small \
                    --min-dist 5000 \
                    --max-dist 200000 \
-                   --perc-undetected=30 \
+                   --perc-undetected=10 \
                    SRR7706227_SRR7706226_hic_scer_mitotic_2kb.cool \
-                   SRR7706227_SRR7706226_scer_mitotic_p0.5
+                   SRR7706227_SRR7706226_scer_mitotic_p05
 ```
 
-###  *Schizosaccharomyces pombe*
-
-```bash
-chromosight detect --pattern=loops_small \
-                   --pearson=0.4 \
-                   --min-dist 5000 \
-                   --max-dist 200000 \
-                   SRR5149256_hic_spo_2kb.cool \
-                   SRR5149256_spo_loops_p04
-```
-
-### *Saccharomyces cerevisiae*
+### *Saccharomyces cerevisiae, G1 phase*
 ```bash
 chromosight detect --pattern=loops_small \
                    --min-dist 5000 \
@@ -95,13 +95,26 @@ chromosight detect --pattern=loops_small \
                    SRR8769554_scer_g1_loops_p05
 ```
 
-#### For comparison of groups of loops
+**Schizosaccharomyces pombe**
 
-`bash script_common_loops5.sh SRR7706227_SRR7706226_hic_scer_mitotic_2kb.cool mitotic SRR8769554_hic_scer_g1_2kb.cool G1`
+```bash
+chromosight detect --pattern=loops_small \
+                   --pearson=0.4 \
+                   --min-dist 5000 \
+                   --max-dist 200000 \
+                   SRR5149256_hic_spo_2kb.cool \
+                   SRR5149256_spo_loops_p04
+```
 
-## Fig. 3
+For comparison of the number of loops detected in G1 and M phase, both matrices have been subsampled to the same number of contacts. The whole process, along with the generation of the Venn diagram in figure 2c is streamlined in bash script `common_loops_fig2.sh`, which can be used as follows:
 
-### *Human*
+`bash detect_loops_venn2.sh SRR7706227_SRR7706226_hic_scer_mitotic_2kb.cool mitotic SRR8769554_hic_scer_g1_2kb.cool G1`
+
+### Fig. 3
+
+**Human**
+
+Loop detection in human matrices were done with the following commands:
 
 ```bash
 chromosight detect --pattern=loops_small \
@@ -122,7 +135,7 @@ chromosight detect --pattern=hairpins \
 ```
 
 
-### *Bacillus subtilis*
+**Bacillus subtilis**
 
 ```bash
 chromosight detect --pearson=0.3 \
@@ -133,7 +146,7 @@ chromosight detect --pearson=0.3 \
                    out_bsub_loops_p03
 ```
 
-### *Epstein Barr Virus (EBV)*
+**Epstein Barr Virus (EBV)**
 
 ```bash
 chromosight detect --pattern=loops \
@@ -144,9 +157,11 @@ chromosight detect --pattern=loops \
                    SRR2312566_ebv_loops
 ```
 
-## Fig. 4
+### Fig. 4
 
-### *Candida Albicans*
+Below are the commands required to interactively pick inter-telomeric coordinates from the _S. cerevisiae_ contact map, generate for custom kernel generation, ans use the resulting kernel for detection on the _C. albicans_ contact map. Both contact maps are available in the zenodo entry.
+
+**Candida Albicans**
 
 ```bash
 
