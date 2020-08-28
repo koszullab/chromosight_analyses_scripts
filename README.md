@@ -170,7 +170,7 @@ ca_map="SRR3381672_hic_calb_10kb.cool"
 
 # Interactively pick 5-10 centros from S. cerevisiae
 # Note the grep and sed commands capture the standard output (coords of clicks)
-#and send them to a file
+# and send them to a file. They are only required to show each individual window on the figure
 chromosight generate-config --n-mads 15 \
                             --click "$sc_map" \
                             --win-size 41 \
