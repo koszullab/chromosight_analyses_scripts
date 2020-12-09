@@ -156,8 +156,21 @@ chromosight detect --pattern=loops \
                    SRR2312566_chiapet_ebv_500bp.cool \
                    SRR2312566_ebv_loops
 ```
-
 ### Fig. 4
+
+The following command was used for detection of loops in other protocols than Hi-C.
+
+```bash
+chromosight detect --pattern=loops_small \
+                   --threads=10 \
+                   --min-dist=15000 \
+                   --max-dist=2000000 \
+                   4DNFI81RQ431.mcool::/resolutions/10000 \
+                   out_4DNFI81RQ431_10kb_loops_small`
+```
+
+
+### Fig. 5
 
 Below are the commands required to interactively pick inter-telomeric coordinates from the _S. cerevisiae_ contact map, generate for custom kernel generation, ans use the resulting kernel for detection on the _C. albicans_ contact map. Both contact maps are available in the zenodo entry.
 
@@ -228,16 +241,6 @@ chromosight quantify --pattern=loops \
 We then use the python code [spectrum_cycle2_imple.py](https://github.com/koszullab/chromosight_analyses_scripts/blob/master/python_codes/spectrum_cycle2_imple.py) to compute the lowess signal from the scatter plot of the loop scores versus distances between 
 peaks of cohesin and create the corresponding plot. 
 
-### Detection of loops in other protocols than Hi-C
-
-```bash
-chromosight detect --pattern=loops_small \
-                   --threads=10 \
-                   --min-dist=15000 \
-                   --max-dist=2000000 \
-                   4DNFI81RQ431.mcool::/resolutions/10000 \
-                   out_4DNFI81RQ431_10kb_loops_small`
-```
 
 ### Comparison of loop calls around CTCF across loop callers
 
