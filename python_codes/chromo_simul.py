@@ -17,6 +17,10 @@ import cooler
 import hicstuff.hicstuff as hcs
 import chromosight.utils.preprocessing as cup
 import chromosight.kernels as ck
+import statsmodels.api as sm
+lowess = sm.nonparametric.lowess
+
+RM_BAD_BINS = False
 
 # Parse CLI arguments
 # Path to the cool file with experimental data
@@ -48,18 +52,19 @@ n = mat.shape[0]  # size of the chromosome contact map
 ratio_borders = ck.borders["kernels"][0]
 ratio_borders = ratio_borders ** 0.2  # to attenuate a bit
 ratio_loops = ck.loops["kernels"][0]
-ratio_loops = ratio_loops  # to attenuate a bit
+ratio_loops = ratio_loops ** 1  # to attenuate a bit
 # Loops and borders windows radii
 l_rad = int(ratio_loops.shape[0] // 2)
 b_rad = int(ratio_borders.shape[0] // 2)
 
 # Remove borders from experimental data overlapping empty bins:
 borders_pos = list(borders_pos)
-for b in borders_pos.copy():
-    # If any bad (empty) bin is closer to a border than the radius of the
-    # pattern template, drop it
-    if np.any(np.abs(bad_bins - b) < max(ratio_borders.shape)):
-        borders_pos.remove(b)
+if RM_BAD_BINS:
+    for b in borders_pos.copy():
+        # If any bad (empty) bin is closer to a border than the radius of the
+        # pattern template, drop it
+        if np.any(np.abs(bad_bins - b) < max(ratio_borders.shape)):
+            borders_pos.remove(b)
 
 
 def vec1d_to_2d(pos, n_cols):
@@ -86,6 +91,8 @@ d_smooth = cup.distance_law(
 )
 d_smooth[np.isnan(d_smooth)] = 0
 prob_d_smooth = d_smooth / np.sum(d_smooth)
+prob_d_smooth = lowess(prob_d_smooth, range(0, len(prob_d_smooth) ) , frac=1./15)
+prob_d_smooth = prob_d_smooth[:,1]
 # TADs size distribution:
 borders_sizes = []
 for i in range(1, len(borders_pos)):
@@ -157,9 +164,9 @@ for random_i in range(1, Nrealisations):
     loops_random = []
     for b1 in borders_random:
         for b2 in borders_random:
-            lsize = b2 - b1
+            lsize = abs(b1 - b2)
             #  loops detectable between 4 and 200 kb
-            if 4000 / clr.binsize > lsize < 200000 / clr.binsize:
+            if (4000 / clr.binsize) < lsize < (200000 / clr.binsize):
                 # Give a probability of using each loop inversely proportional
                 # to the length of the loop (-> more small loops)
                 if (100 - lsize) / 100.0 > np.random.rand() * 5.0:
@@ -214,8 +221,13 @@ for random_i in range(1, Nrealisations):
         sample_batch = np.random.choice(
             vect_indices, size=min(100000, nreads_left), p=vect_propen
         )
+        # Convert sampled 1D indices to x, y coords
         batch_rows, batch_cols = vec1d_to_2d(sample_batch, n)
-        mat_simul[batch_rows, batch_cols] += 1
+        # Fill sampled contacts into a matrix
+        batch_counts = np.bincount(mat_simul.shape[0] * batch_rows + batch_cols)
+        batch_counts.resize(mat_simul.shape)
+        # Add to previous batches
+        mat_simul = mat_simul + batch_counts
         print(f"{nreads - nreads_left} / {nreads} contacts subsampled")
         nreads_left -= len(sample_batch)
 
@@ -228,7 +240,6 @@ for random_i in range(1, Nrealisations):
         mat_simul,
         fmt="%d",
     )
-
     matscn2 = hcs.normalize_dense(mat_simul, iterations=60)
     np.savetxt(
         join(out_dir, f"MAT_NORMALISED_realisation{random_i}.txt"),
