@@ -229,20 +229,16 @@ for random_i in range(1, Nrealisations):
         fmt="%d",
     )
 
-    matscn2 = hcs.normalize_dense(mat_simul, iterations=30)
-    matscn2 = (matscn2 + np.transpose(matscn2)) / 2.0
+    matscn2 = hcs.normalize_dense(mat_simul, iterations=60)
     np.savetxt(
         join(out_dir, f"MAT_NORMALISED_realisation{random_i}.txt"),
         matscn2,
         fmt="%e",
     )
-
     plt.imshow(
-        matscn2 ** 0.15,
+        matscn2,
         interpolation="none",
         cmap="afmhot_r",
-        vmin=0.0,
-        vmax=0.8,
     )
     plt.savefig(
         join(out_dir, f"MAT_realisation{random_i}.png"), dpi=500, format="png",
