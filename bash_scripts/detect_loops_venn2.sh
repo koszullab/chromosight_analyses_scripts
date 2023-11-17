@@ -92,7 +92,7 @@ pdfjam "out_in_${name_bank1}.group2.${name_bank2}.pdf" "out_in_${name_bank2}.gro
 pdfjam "out_in_${name_bank1}.group12.pdf"  "out_in_${name_bank2}.group12.pdf" --nup 2x1 --landscape --outfile all_pileups_g12.pdf
 # Combine all pileups into a single pdf
 pdfjam all_pileups_g1.pdf all_pileups_g12.pdf all_pileups_g2.pdf --nup 6x1 --landscape --outfile "all_pileups_${name_bank1}.${name_bank2}.pdf"
-pdfjam "all_pileups_${name_bank1}.${name_bank2}.pdf" "venn_diagram_group_loops_${name_bank1}'_'${name_bank2}.pdf" --nup 1x2  --outfile "final_${name_bank1}.${name_bank2}.pdf"
+pdfjam "all_pileups_${name_bank1}.${name_bank2}.pdf" "venn_diagram_group_loops_${name_bank1}"_"${name_bank2}.pdf" --nup 1x2  --outfile "final_${name_bank1}.${name_bank2}.pdf"
 
 echo "Computations and plots are finished! Just relax, go to Breguet."
 
